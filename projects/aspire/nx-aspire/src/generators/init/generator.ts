@@ -17,9 +17,6 @@ export async function initGenerator(
   const packageName = '@jaxvikco/nx-aspire';
   const aspireCliPackage = '@microsoft/aspire-cli';
 
-  // Returns a callback that runs the package manager install, linking the
-  // aspire CLI into node_modules/.bin so the inferred target's bare
-  // `aspire run` command resolves the workspace-local install.
   const installCallback = addDependenciesToPackageJson(
     tree,
     {},

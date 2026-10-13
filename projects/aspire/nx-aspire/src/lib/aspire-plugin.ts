@@ -1,10 +1,6 @@
 import type { CreateNodesV2 } from '@nx/devkit';
 
 export interface AspirePluginOptions {
-  /**
-   * Name of the target used to run the Aspire AppHost.
-   * @default "run"
-   */
   runTargetName?: string;
 }
 
