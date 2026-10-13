@@ -1,0 +1,53 @@
+{
+  "name": "@jaxvikco/nx-aspire",
+  "version": "0.0.0-e2e",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@jaxvikco/open": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "outputPath": "projects/aspire/nx-aspire/dist",
+          "main": "projects/aspire/nx-aspire/src/index.ts",
+          "tsConfig": "projects/aspire/nx-aspire/tsconfig.lib.json",
+          "rootDir": "projects/aspire/nx-aspire/src",
+          "generatePackageJson": false,
+          "assets": [
+            {
+              "input": "./projects/aspire/nx-aspire/src",
+              "glob": "**/!(*.ts)",
+              "output": "."
+            },
+            {
+              "input": "./projects/aspire/nx-aspire/src",
+              "glob": "**/*.d.ts",
+              "output": "."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

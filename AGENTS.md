@@ -1,0 +1,1 @@
+* Use `npx nx` to invoke the nx cli

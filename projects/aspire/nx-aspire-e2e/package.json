@@ -1,0 +1,28 @@
+{
+  "name": "@jaxvikco/nx-aspire-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "projectType": "application",
+    "sourceRoot": "projects/aspire/nx-aspire-e2e/src",
+    "implicitDependencies": [
+      "@jaxvikco/nx-aspire"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/vitest:test",
+        "outputs": [
+          "{options.reportsDirectory}"
+        ],
+        "dependsOn": [
+          "^build"
+        ],
+        "options": {
+          "reportsDirectory": "coverage/projects/aspire/nx-aspire-e2e",
+          "maxWorkers": 1,
+          "isolate": false
+        }
+      }
+    }
+  }
+}
