@@ -13,7 +13,7 @@ test('detects projects via **/aspire.config.json', async () => {
 });
 
 test('sets project root to the aspire.config.json folder and names it after that folder', async () => {
-  const [result] = await createNodesV2[1](
+  const [[, result]] = await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     undefined,
     context
@@ -25,7 +25,7 @@ test('sets project root to the aspire.config.json folder and names it after that
 });
 
 test('infers a continuous, non-cached run target running aspire run in the project root', async () => {
-  const [result] = await createNodesV2[1](
+  const [[, result]] = await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     undefined,
     context
@@ -39,7 +39,7 @@ test('infers a continuous, non-cached run target running aspire run in the proje
 });
 
 test('makes the target name configurable via runTargetName', async () => {
-  const [result] = await createNodesV2[1](
+  const [[, result]] = await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     { runTargetName: 'serve' },
     context
@@ -50,7 +50,7 @@ test('makes the target name configurable via runTargetName', async () => {
 });
 
 test('sets project and target metadata', async () => {
-  const [result] = await createNodesV2[1](
+  const [[, result]] = await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     undefined,
     context
@@ -64,7 +64,7 @@ test('sets project and target metadata', async () => {
 });
 
 test('adds no dependsOn, configurations, or tags', async () => {
-  const [result] = await createNodesV2[1](
+  const [[, result]] = await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     undefined,
     context
