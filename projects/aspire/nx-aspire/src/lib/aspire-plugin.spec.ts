@@ -1,7 +1,10 @@
+import type { CreateNodesContext } from '@nx/devkit';
 import { createNodesV2 } from './aspire-plugin';
 
-const context = { workspaceRoot: "/workspace" };
-
+const context = {
+  workspaceRoot: '/workspace',
+  nxJsonConfiguration: {},
+} satisfies CreateNodesContext;
 
 test('detects projects via **/aspire.config.json', async () => {
   const results = await createNodesV2[1](
@@ -13,11 +16,11 @@ test('detects projects via **/aspire.config.json', async () => {
 });
 
 test('sets project root to the aspire.config.json folder and names it after that folder', async () => {
-  const [[, result]] = await createNodesV2[1](
+  const [[, result]] = (await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     undefined,
     context
-  );
+  )) as Array<[string, { projects: Record<string, any> }]>;
   const project = result.projects['apps/myhost'];
   expect(project).toBeDefined();
   expect(project.name).toBe('myhost');
@@ -25,11 +28,11 @@ test('sets project root to the aspire.config.json folder and names it after that
 });
 
 test('infers a continuous, non-cached run target running aspire run in the project root', async () => {
-  const [[, result]] = await createNodesV2[1](
+  const [[, result]] = (await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     undefined,
     context
-  );
+  )) as Array<[string, { projects: Record<string, any> }]>;
   const target = result.projects['apps/myhost'].targets['run'];
   expect(target.executor).toBe('nx:run-commands');
   expect(target.options.command).toBe('aspire run');
@@ -39,22 +42,22 @@ test('infers a continuous, non-cached run target running aspire run in the proje
 });
 
 test('makes the target name configurable via runTargetName', async () => {
-  const [[, result]] = await createNodesV2[1](
+  const [[, result]] = (await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     { runTargetName: 'serve' },
     context
-  );
+  )) as Array<[string, { projects: Record<string, any> }]>;
   const project = result.projects['apps/myhost'];
   expect(project.targets['serve']).toBeDefined();
   expect(project.targets['run']).toBeUndefined();
 });
 
 test('sets project and target metadata', async () => {
-  const [[, result]] = await createNodesV2[1](
+  const [[, result]] = (await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     undefined,
     context
-  );
+  )) as Array<[string, { projects: Record<string, any> }]>;
   const project = result.projects['apps/myhost'];
   expect(project.metadata.technologies).toEqual(['aspire']);
   expect(project.targets['run'].metadata.technologies).toEqual(['aspire']);
@@ -64,11 +67,11 @@ test('sets project and target metadata', async () => {
 });
 
 test('adds no dependsOn, configurations, or tags', async () => {
-  const [[, result]] = await createNodesV2[1](
+  const [[, result]] = (await createNodesV2[1](
     ['apps/myhost/aspire.config.json'],
     undefined,
     context
-  );
+  )) as Array<[string, { projects: Record<string, any> }]>;
   const project = result.projects['apps/myhost'];
   const target = project.targets['run'];
   expect(target.dependsOn).toBeUndefined();
