@@ -3,7 +3,7 @@
     "init": {
       "factory": "./dist/generators/init/generator",
       "schema": "./dist/generators/init/schema.json",
-      "description": "Initialize the @jaxvikco/nx-aspire plugin in the workspace."
+      "description": "Initialize the @jaxvik/nx-aspire plugin in the workspace."
     }
   }
 }

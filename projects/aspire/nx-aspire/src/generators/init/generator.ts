@@ -15,12 +15,12 @@ export async function initGenerator(
   tree: Tree,
   options: InitGeneratorOptions
 ): Promise<GeneratorCallback> {
-  const packageName = '@jaxvikco/nx-aspire';
+  const packageName = '@jaxvik/nx-aspire';
   const aspireCliPackage = '@microsoft/aspire-cli';
 
   // Depend on the version of this plugin that is actually installed in the
   // consumer workspace, so the generator works for any published version.
-  const manifestPath = 'node_modules/@jaxvikco/nx-aspire/package.json';
+  const manifestPath = 'node_modules/@jaxvik/nx-aspire/package.json';
   const pluginVersion = tree.exists(manifestPath)
     ? readJson<{ version: string }>(tree, manifestPath).version
     : 'latest';

@@ -5,7 +5,7 @@ export default defineConfig(() => ({
   cacheDir: '../../../node_modules/.vite/aspire/nx-aspire-e2e',
   test: {
     
-    globalSetup: '../../../tools/scripts/vitest-global-setup.ts',name: '@jaxvikco/nx-aspire-e2e',
+    globalSetup: '../../../tools/scripts/vitest-global-setup.ts',name: '@jaxvik/nx-aspire-e2e',
     watch: false,
     globals: true,
     environment: 'node',

@@ -1,4 +1,4 @@
-# @jaxvikco/nx-aspire
+# @jaxvik/nx-aspire
 
 An [Nx](https://nx.dev) plugin for [.NET Aspire](https://learn.microsoft.com/dotnet/aspire/) projects.
 
@@ -7,13 +7,13 @@ It automatically detects projects containing an `aspire.config.json` (Aspire App
 ## Setup
 
 ```sh
-npm install -D @jaxvikco/nx-aspire
+npm install -D @jaxvik/nx-aspire
 ```
 
 Or use the init generator, which installs the plugin and the Aspire CLI, and registers the plugin in `nx.json`:
 
 ```sh
-npx nx g @jaxvikco/nx-aspire:init
+npx nx g @jaxvik/nx-aspire:init
 ```
 
 ## Usage
@@ -34,7 +34,7 @@ The plugin accepts options via the `plugins` entry in `nx.json`:
 {
   "plugins": [
     {
-      "plugin": "@jaxvikco/nx-aspire",
+      "plugin": "@jaxvik/nx-aspire",
       "options": {
         "runTargetName": "serve"
       }

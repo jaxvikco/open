@@ -10,7 +10,7 @@ import { releasePublish, releaseVersion } from 'nx/release';
 
 export default async () => {
   // local registry target to run
-  const localRegistryTarget = '@jaxvikco/open:local-registry';
+  const localRegistryTarget = '@jaxvik/open:local-registry';
   // storage folder for the local registry
   const storage = './tmp/local-registry/storage';
 
