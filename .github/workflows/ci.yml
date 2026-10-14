@@ -24,8 +24,7 @@ jobs:
       # Run this command as early as possible, before dependencies are installed
       # Configure Nx Agents and task distribution in .nx/ci-config.yaml
       # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#nx-cloud-start-nx-agents
-      # Connect your workspace by running "nx connect" and uncomment this line to enable task distribution
-      # - run: npx nx start-nx-agents
+      - run: npx nx start-nx-agents
 
       
       # Cache node_modules

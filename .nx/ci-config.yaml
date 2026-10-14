@@ -6,4 +6,7 @@ dte:
   distribute-on: 3 linux-medium-js
 lifecycle:
   stop-after:
+    - lint
+    - test
     - build
+    - typecheck
