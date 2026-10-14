@@ -1,6 +1,7 @@
 import {
   addDependenciesToPackageJson,
   formatFiles,
+  readJson,
   updateJson,
   type GeneratorCallback,
   type Tree,
@@ -17,10 +18,17 @@ export async function initGenerator(
   const packageName = '@jaxvikco/nx-aspire';
   const aspireCliPackage = '@microsoft/aspire-cli';
 
+  // Depend on the version of this plugin that is actually installed in the
+  // consumer workspace, so the generator works for any published version.
+  const manifestPath = 'node_modules/@jaxvikco/nx-aspire/package.json';
+  const pluginVersion = tree.exists(manifestPath)
+    ? readJson<{ version: string }>(tree, manifestPath).version
+    : 'latest';
+
   const installCallback = addDependenciesToPackageJson(
     tree,
     {},
-    { [packageName]: '0.0.0-e2e', [aspireCliPackage]: '^13.0.0' }
+    { [packageName]: pluginVersion, [aspireCliPackage]: '^13.6.0' }
   );
 
   updateJson(tree, 'nx.json', (nxJson) => {

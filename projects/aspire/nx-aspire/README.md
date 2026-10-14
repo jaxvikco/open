@@ -1,11 +1,48 @@
-# nx
+# @jaxvikco/nx-aspire
 
-This library was generated with [Nx](https://nx.dev).
+An [Nx](https://nx.dev) plugin for [.NET Aspire](https://learn.microsoft.com/dotnet/aspire/) projects.
 
-## Building
+It automatically detects projects containing an `aspire.config.json` (Aspire AppHost projects) and infers a `run` target that starts the AppHost with the Aspire CLI.
 
-Run `nx build nx` to build the library.
+## Setup
 
-## Running unit tests
+```sh
+npm install -D @jaxvikco/nx-aspire
+```
 
-Run `nx test nx` to execute the unit tests via [Vitest](https://vitest.dev/).
+Or use the init generator, which installs the plugin and the Aspire CLI, and registers the plugin in `nx.json`:
+
+```sh
+npx nx g @jaxvikco/nx-aspire:init
+```
+
+## Usage
+
+Any project with an `aspire.config.json` at its root is detected automatically. Nx infers a `run` target for it:
+
+```sh
+npx nx run my-apphost
+```
+
+This runs `aspire run` in the project directory, starting the Aspire AppHost (dashboard and all resources it orchestrates).
+
+### Configuration
+
+The plugin accepts options via the `plugins` entry in `nx.json`:
+
+```json
+{
+  "plugins": [
+    {
+      "plugin": "@jaxvikco/nx-aspire",
+      "options": {
+        "runTargetName": "serve"
+      }
+    }
+  ]
+}
+```
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `runTargetName` | `run` | Name of the inferred target that runs the AppHost. |
