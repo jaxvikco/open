@@ -5,7 +5,9 @@ import { join } from 'node:path';
 import { initGenerator } from './generator.ts';
 
 const pluginVersion = (
-  JSON.parse(readFileSync(join(process.cwd(), 'package.json'), 'utf-8')) as {
+  JSON.parse(
+    readFileSync(join(import.meta.dirname, '../../../package.json'), 'utf-8')
+  ) as {
     version: string;
   }
 ).version;

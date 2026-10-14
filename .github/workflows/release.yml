@@ -24,6 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          ref: main
           filter: tree:0
           fetch-depth: 0
 
