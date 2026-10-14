@@ -45,7 +45,7 @@ test('init generator registers the plugin in nx.json', () => {
     stdio: 'ignore',
     env: process.env,
   });
-});
+}, 300_000);
 
 test('init generator installs the aspire CLI locally', () => {
   const packageJson = JSON.parse(

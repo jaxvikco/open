@@ -6,6 +6,8 @@ It automatically detects projects containing an `aspire.config.json` (Aspire App
 
 ## Setup
 
+Requires Node.js 22.12 or later.
+
 ```sh
 npm install -D @jaxvik/nx-aspire
 ```

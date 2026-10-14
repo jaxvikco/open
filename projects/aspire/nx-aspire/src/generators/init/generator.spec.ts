@@ -1,12 +1,23 @@
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readJson } from '@nx/devkit';
-import { initGenerator } from './generator';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { initGenerator } from './generator.ts';
 
-test('adds the plugin to package.json devDependencies', async () => {
+const pluginVersion = (
+  JSON.parse(readFileSync(join(process.cwd(), 'package.json'), 'utf-8')) as {
+    version: string;
+  }
+).version;
+
+test('uses the resolved plugin version without a workspace node_modules manifest', async () => {
   const tree = createTreeWithEmptyWorkspace();
+  expect(tree.exists('node_modules/@jaxvik/nx-aspire/package.json')).toBe(
+    false
+  );
   await initGenerator(tree, { skipFormat: true });
   const packageJson = readJson(tree, 'package.json');
-  expect(packageJson.devDependencies['@jaxvik/nx-aspire']).toBeDefined();
+  expect(packageJson.devDependencies['@jaxvik/nx-aspire']).toBe(pluginVersion);
 });
 
 test('adds the aspire CLI to package.json devDependencies', async () => {

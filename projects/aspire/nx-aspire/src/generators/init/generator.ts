@@ -1,11 +1,11 @@
 import {
   addDependenciesToPackageJson,
   formatFiles,
-  readJson,
   updateJson,
   type GeneratorCallback,
   type Tree,
 } from '@nx/devkit';
+import { readFileSync } from 'node:fs';
 
 export interface InitGeneratorOptions {
   skipFormat?: boolean;
@@ -18,12 +18,13 @@ export async function initGenerator(
   const packageName = '@jaxvik/nx-aspire';
   const aspireCliPackage = '@microsoft/aspire-cli';
 
-  // Depend on the version of this plugin that is actually installed in the
-  // consumer workspace, so the generator works for any published version.
-  const manifestPath = 'node_modules/@jaxvik/nx-aspire/package.json';
-  const pluginVersion = tree.exists(manifestPath)
-    ? readJson<{ version: string }>(tree, manifestPath).version
-    : 'latest';
+  const pluginPackageJson: { version: string } = JSON.parse(
+    readFileSync(
+      new URL(import.meta.resolve(`${packageName}/package.json`)),
+      'utf-8'
+    )
+  );
+  const pluginVersion = pluginPackageJson.version;
 
   const installCallback = addDependenciesToPackageJson(
     tree,
