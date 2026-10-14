@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "properties": {
+    "skipFormat": {
+      "type": "boolean",
+      "description": "Skip formatting files after the generator runs."
+    }
+  }
+}

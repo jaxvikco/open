@@ -16,8 +16,11 @@
   },
   "files": [
     "dist",
+    "generators.json",
+    "src/generators/init/schema.json",
     "!**/*.tsbuildinfo"
   ],
+  "generators": "./generators.json",
   "nx": {
     "targets": {
       "build": {
