@@ -10,7 +10,7 @@ It automatically detects projects containing an `aspire.config.json` (Aspire App
 npm install -D @jaxvik/nx-aspire
 ```
 
-Or use the init generator, which installs the plugin and the Aspire CLI, and registers the plugin in `nx.json`:
+Then run the init generator to install the Aspire CLI and register the plugin in `nx.json`:
 
 ```sh
 npx nx g @jaxvik/nx-aspire:init
@@ -21,7 +21,7 @@ npx nx g @jaxvik/nx-aspire:init
 Any project with an `aspire.config.json` at its root is detected automatically. Nx infers a `run` target for it:
 
 ```sh
-npx nx run my-apphost
+npx nx run my-apphost:run
 ```
 
 This runs `aspire run` in the project directory, starting the Aspire AppHost (dashboard and all resources it orchestrates).
