@@ -42,12 +42,17 @@ jobs:
 
       - name: Release
         run: |
-          if [ -z "$VERSION" ] && [ -z "$(git tag -l 'v*')" ]; then
+          RELEASE_TAGS="$(git tag -l 'v*')"
+          if [ -z "$VERSION" ] && [ -z "$RELEASE_TAGS" ]; then
             echo "No release tag exists yet. Dispatch manually with an explicit version (e.g. 1.0.0) for the first release."
             exit 0
           fi
           if [ -n "$VERSION" ]; then
-            npx nx release --yes "$VERSION"
+            if [ -z "$RELEASE_TAGS" ]; then
+              npx nx release --yes "$VERSION" --first-release
+            else
+              npx nx release --yes "$VERSION"
+            fi
           else
             npx nx release --yes
           fi
