@@ -66,8 +66,7 @@
   },
   "release": {
     "version": {
-      "conventionalCommits": true,
-      "preVersionCommand": "npx nx run-many -t build"
+      "conventionalCommits": true
     },
     "conventionalCommits": {
       "useCommitScope": false
