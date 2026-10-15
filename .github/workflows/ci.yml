@@ -6,10 +6,6 @@ on:
       - main
   pull_request:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Explicit version (e.g. 1.0.0). Empty = derive from conventional commits.'
-        required: false
 
 permissions:
   actions: read
@@ -68,6 +64,7 @@ jobs:
     concurrency:
       group: release
       cancel-in-progress: false
+      queue: max
     permissions:
       contents: write
       id-token: write
@@ -78,46 +75,53 @@ jobs:
           filter: tree:0
           fetch-depth: 0
 
-      - name: Attach release branch
+      - name: Check tested commit is still main
+        id: release_guard
         run: |
-          git switch -c main
-          git branch --set-upstream-to=origin/main main
+          git fetch origin main
+          main_sha="$(git rev-parse FETCH_HEAD)"
+          if [ "$main_sha" = "$GITHUB_SHA" ]; then
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "main advanced to $main_sha; skipping release for $GITHUB_SHA"
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - uses: actions/setup-node@v6
+        if: steps.release_guard.outputs.should_release == 'true'
         with:
           node-version: 24
           cache: npm
           registry-url: https://registry.npmjs.org
 
       - run: npm ci
+        if: steps.release_guard.outputs.should_release == 'true'
 
       - name: Download package build
+        if: steps.release_guard.outputs.should_release == 'true'
         uses: actions/download-artifact@v4
         with:
           name: nx-aspire-dist
           path: projects/aspire/nx-aspire/dist
 
       - name: Configure git identity
+        if: steps.release_guard.outputs.should_release == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Release
+        if: steps.release_guard.outputs.should_release == 'true'
         run: |
-          RELEASE_TAGS="$(git tag -l 'v*')"
-          if [ -z "$VERSION" ] && [ -z "$RELEASE_TAGS" ]; then
-            echo "No release tag exists yet. Dispatch manually with an explicit version (e.g. 1.0.0) for the first release."
-            exit 0
-          fi
-          if [ -n "$VERSION" ]; then
-            if [ -z "$RELEASE_TAGS" ]; then
-              npx nx release --yes "$VERSION" --first-release
+          release_tags="$(git tag --list '@jaxvik/nx-aspire@*')"
+          if [ -z "$release_tags" ]; then
+            if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+              npx nx release 1.0.0 --first-release --yes
             else
-              npx nx release --yes "$VERSION"
+              echo "No release tag exists yet; run this workflow manually from main to publish the first release as 1.0.0."
             fi
           else
             npx nx release --yes
           fi
         env:
-          VERSION: ${{ inputs.version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -65,8 +65,16 @@
     }
   },
   "release": {
+    "projectsRelationship": "independent",
+    "git": {
+      "commit": false,
+      "tag": true,
+      "pushArgs": "refs/tags/*:refs/tags/*"
+    },
     "version": {
-      "conventionalCommits": true
+      "specifierSource": "conventional-commits",
+      "currentVersionResolver": "git-tag",
+      "fallbackCurrentVersionResolver": "disk"
     },
     "conventionalCommits": {
       "useCommitScope": false
@@ -75,6 +83,7 @@
       "automaticFromRef": true,
       "workspaceChangelog": false,
       "projectChangelogs": {
+        "file": false,
         "createRelease": "github"
       }
     }
