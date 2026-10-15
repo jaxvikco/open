@@ -65,7 +65,6 @@ jobs:
     needs: main
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
-    environment: npm-publish
     concurrency:
       group: release
       cancel-in-progress: false
