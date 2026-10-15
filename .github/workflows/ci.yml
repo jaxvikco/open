@@ -78,6 +78,11 @@ jobs:
           filter: tree:0
           fetch-depth: 0
 
+      - name: Attach release branch
+        run: |
+          git switch -c main
+          git branch --set-upstream-to=origin/main main
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
