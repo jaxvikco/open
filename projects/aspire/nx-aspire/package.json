@@ -1,14 +1,36 @@
 {
-  "name": "@jaxvikco/nx-aspire",
-  "version": "0.0.0-e2e",
-  "type": "commonjs",
+  "name": "@jaxvik/nx-aspire",
+  "version": "0.0.0",
+  "description": "Nx plugin for .NET Aspire AppHost projects: infers run targets from aspire.config.json and wires up the Aspire CLI.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaxvikco/open.git",
+    "directory": "projects/aspire/nx-aspire"
+  },
+  "bugs": {
+    "url": "https://github.com/jaxvikco/open/issues"
+  },
+  "homepage": "https://github.com/jaxvikco/open/tree/main/projects/aspire/nx-aspire#readme",
+  "keywords": [
+    "nx",
+    "nx-plugin",
+    "aspire",
+    ".net",
+    "aspire-cli"
+  ],
+  "author": "Mike Haas",
+  "license": "MIT",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "@jaxvikco/open": "./src/index.ts",
+      "@jaxvik/open": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
@@ -25,6 +47,7 @@
     "targets": {
       "build": {
         "executor": "@nx/js:tsc",
+        "inputs": ["default", "^default", "{workspaceRoot}/LICENSE"],
         "outputs": [
           "{options.outputPath}"
         ],
@@ -44,6 +67,11 @@
               "input": "./projects/aspire/nx-aspire/src",
               "glob": "**/*.d.ts",
               "output": "."
+            },
+            {
+              "input": ".",
+              "glob": "LICENSE",
+              "output": "."
             }
           ]
         }
@@ -52,5 +80,11 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@nx/devkit": ">=23.0.0"
+  },
+  "devDependencies": {
+    "@nx/devkit": "23.3.0"
   }
 }

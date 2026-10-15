@@ -1,12 +1,12 @@
 {
-  "name": "@jaxvikco/nx-aspire-e2e",
+  "name": "@jaxvik/nx-aspire-e2e",
   "version": "0.0.1",
   "private": true,
   "nx": {
     "projectType": "application",
     "sourceRoot": "projects/aspire/nx-aspire-e2e/src",
     "implicitDependencies": [
-      "@jaxvikco/nx-aspire"
+      "@jaxvik/nx-aspire"
     ],
     "targets": {
       "e2e": {

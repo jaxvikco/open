@@ -5,6 +5,7 @@ import {
   type GeneratorCallback,
   type Tree,
 } from '@nx/devkit';
+import { readFileSync } from 'node:fs';
 
 export interface InitGeneratorOptions {
   skipFormat?: boolean;
@@ -14,13 +15,21 @@ export async function initGenerator(
   tree: Tree,
   options: InitGeneratorOptions
 ): Promise<GeneratorCallback> {
-  const packageName = '@jaxvikco/nx-aspire';
+  const packageName = '@jaxvik/nx-aspire';
   const aspireCliPackage = '@microsoft/aspire-cli';
+
+  const pluginPackageJson: { version: string } = JSON.parse(
+    readFileSync(
+      new URL(import.meta.resolve(`${packageName}/package.json`)),
+      'utf-8'
+    )
+  );
+  const pluginVersion = pluginPackageJson.version;
 
   const installCallback = addDependenciesToPackageJson(
     tree,
     {},
-    { [packageName]: '0.0.0-e2e', [aspireCliPackage]: '^13.0.0' }
+    { [packageName]: pluginVersion, [aspireCliPackage]: '^13.6.0' }
   );
 
   updateJson(tree, 'nx.json', (nxJson) => {

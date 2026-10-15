@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../../node_modules/.vite/aspire/nx-aspire',
   test: {
-    name: '@jaxvikco/nx-aspire',
+    name: '@jaxvik/nx-aspire',
     watch: false,
     globals: true,
     environment: 'jsdom',

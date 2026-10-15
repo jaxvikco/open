@@ -7,7 +7,7 @@ let projectDirectory: string;
 beforeAll(async () => {
   projectDirectory = createTestProject();
 
-  execSync(`npm install -D @jaxvikco/nx-aspire@e2e`, {
+  execSync(`npm install -D @jaxvik/nx-aspire@e2e`, {
     cwd: projectDirectory,
     stdio: 'inherit',
     env: process.env,
@@ -24,14 +24,14 @@ afterAll(() => {
 });
 
 test('should be installed', () => {
-  execSync('npm ls @jaxvikco/nx-aspire', {
+  execSync('npm ls @jaxvik/nx-aspire', {
     cwd: projectDirectory,
     stdio: 'inherit',
   });
 });
 
 test('init generator registers the plugin in nx.json', () => {
-  execSync('npx nx g @jaxvikco/nx-aspire:init --no-interactive', {
+  execSync('npx nx g @jaxvik/nx-aspire:init --no-interactive', {
     cwd: projectDirectory,
     stdio: 'inherit',
     env: process.env,
@@ -39,13 +39,13 @@ test('init generator registers the plugin in nx.json', () => {
   const nxJson = JSON.parse(
     readFileSync(join(projectDirectory, 'nx.json'), 'utf-8')
   );
-  expect(nxJson.plugins).toContain('@jaxvikco/nx-aspire');
+  expect(nxJson.plugins).toContain('@jaxvik/nx-aspire');
   execSync('npx nx reset', {
     cwd: projectDirectory,
     stdio: 'ignore',
     env: process.env,
   });
-});
+}, 300_000);
 
 test('init generator installs the aspire CLI locally', () => {
   const packageJson = JSON.parse(

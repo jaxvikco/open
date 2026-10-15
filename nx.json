@@ -38,6 +38,11 @@
     }
   ],
   "targetDefaults": {
+    "nx-release-publish": {
+      "options": {
+        "access": "public"
+      }
+    },
     "@nx/js:tsc": {
       "cache": true,
       "dependsOn": [
@@ -60,8 +65,27 @@
     }
   },
   "release": {
+    "projectsRelationship": "independent",
+    "git": {
+      "commit": false,
+      "tag": true,
+      "pushArgs": "refs/tags/*:refs/tags/*"
+    },
     "version": {
-      "preVersionCommand": "npx nx run-many -t build"
+      "specifierSource": "conventional-commits",
+      "currentVersionResolver": "git-tag",
+      "fallbackCurrentVersionResolver": "disk"
+    },
+    "conventionalCommits": {
+      "useCommitScope": false
+    },
+    "changelog": {
+      "automaticFromRef": true,
+      "workspaceChangelog": false,
+      "projectChangelogs": {
+        "file": false,
+        "createRelease": "github"
+      }
     }
   },
   "namedInputs": {
@@ -69,7 +93,20 @@
       "{workspaceRoot}/.github/workflows/ci.yml"
     ],
     "default": [
-      "sharedGlobals"
+      "sharedGlobals",
+      "{projectRoot}/**/*"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/**/*.spec.[jt]s",
+      "!{projectRoot}/**/*.spec.[jt]sx",
+      "!{projectRoot}/**/*.test.[jt]s",
+      "!{projectRoot}/**/*.test.[jt]sx",
+      "!{projectRoot}/**/*.stories.[jt]s",
+      "!{projectRoot}/**/*.stories.[jt]sx",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/eslint.config.mjs"
     ]
   },
   "nxCloudId": "6ace3b50fa4b240f57a56e07"

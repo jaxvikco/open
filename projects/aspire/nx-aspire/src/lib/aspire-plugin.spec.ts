@@ -1,5 +1,5 @@
 import type { CreateNodesContext } from '@nx/devkit';
-import { createNodesV2 } from './aspire-plugin';
+import { createNodesV2 } from './aspire-plugin.ts';
 
 const context = {
   workspaceRoot: '/workspace',
